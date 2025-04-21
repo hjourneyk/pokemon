@@ -3,9 +3,9 @@
     padding: 0;
     box-sizing: border-box;
     cursor: none;
-}
-
-body {
+  }
+  
+  body {
     background: #e0e5ec;
     font-family: 'Poppins', sans-serif;
     color: #333;
@@ -14,9 +14,10 @@ body {
     align-items: center;
     justify-content: center;
     height: 100vh;
-}
-
-.container {
+    text-align: center;
+  }
+  
+  .container {
     width: 600px;
     height: 240px;
     background: #e0e5ec;
@@ -28,51 +29,51 @@ body {
     padding: 20px;
     box-shadow: 10px 10px 20px #b8b8b8, -10px -10px 20px #ffffff;
     position: relative;
-}
-
-.hole {
-    width: 100px;
-    height: 30px;
-    background: #654321;
-    border-radius: 50%;
-    position: relative;
-    box-shadow: inset 5px 5px 10px #502d16, inset -5px -5px 10px #7b4e2a;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-}
-
-.mole {
+    flex-wrap: wrap;
+  }
+  
+  .container::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 60px;
+    background: #8b5e3c;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+  }
+  
+  .mole {
     width: 100px;
     height: 140px;
     background-image: url("diglett.png");
     background-size: cover;
     position: absolute;
-    bottom: -100px; 
-    opacity: 0; 
+    bottom: -100px;
+    opacity: 0;
     transition: bottom 0.3s, opacity 0.3s;
-
-}
-
-@keyframes diglettPop {
-    0% { bottom: -100px; opacity: 0; }
-    30% { opacity: 1; }
-    50% { bottom: 0px; opacity: 1; } 
-    100% { bottom: -100px; opacity: 0; }
-}
-
-.mole.up {
+    z-index: 1;
+  }
+  
+  .mole.up {
     animation: diglettPop 1.2s;
-}
-
-.mole.hit {
+  }
+  
+  @keyframes diglettPop {
+    0% { bottom: -50px; opacity: 0; }
+    30% { opacity: 1; }
+    50% { bottom: 50px; opacity: 1; }
+    100% { bottom: -50px; opacity: 0; }
+  }
+  
+  .mole.hit {
     background-image: url("hit.png");
     background-size: cover;
     opacity: 1;
-    transition: opacity 0.5s ;
-}
-
-.cursor {
+    transition: opacity 0.5s;
+  }
+  
+  .cursor {
     width: 80px;
     height: 80px;
     background-image: url('hammer.png');
@@ -81,13 +82,14 @@ body {
     pointer-events: none;
     transform-origin: top center;
     transition: transform 0.1s;
-}
-
-.cursor.active {
+    z-index: 9999;
+  }
+  
+  .cursor.active {
     transform: translateY(10px) scale(1.1);
-}
-
-#startButton {
+  }
+  
+  button {
     font-size: 18px;
     padding: 12px 25px;
     border-radius: 12px;
@@ -96,19 +98,16 @@ body {
     box-shadow: 5px 5px 10px #b8b8b8, -5px -5px 10px #ffffff;
     cursor: pointer;
     transition: all 0.2s;
-    margin-bottom: 10px;
+    margin: 10px;
     font-family: "Poppins", sans-serif;
     font-weight: 500;
-    font-style: normal;
-    margin: 20px;
-
-}
-
-#startButton:hover {
+  }
+  
+  button:hover {
     box-shadow: inset 3px 3px 6px #b8b8b8, inset -3px -3px 6px #ffffff;
-}
-
-.counter {
+  }
+  
+  .counter {
     font-size: 24px;
     font-weight: bold;
     padding: 10px 20px;
@@ -116,4 +115,4 @@ body {
     background: #e0e5ec;
     box-shadow: 5px 5px 10px #b8b8b8, -5px -5px 10px #ffffff;
     margin: 24px;
-}
+  }
