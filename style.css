@@ -1,0 +1,119 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    cursor: none;
+}
+
+body {
+    background: #e0e5ec;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.container {
+    width: 600px;
+    height: 240px;
+    background: #e0e5ec;
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    padding: 20px;
+    box-shadow: 10px 10px 20px #b8b8b8, -10px -10px 20px #ffffff;
+    position: relative;
+}
+
+.hole {
+    width: 100px;
+    height: 30px;
+    background: #654321;
+    border-radius: 50%;
+    position: relative;
+    box-shadow: inset 5px 5px 10px #502d16, inset -5px -5px 10px #7b4e2a;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.mole {
+    width: 100px;
+    height: 140px;
+    background-image: url("diglett.png");
+    background-size: cover;
+    position: absolute;
+    bottom: -100px; 
+    opacity: 0; 
+    transition: bottom 0.3s, opacity 0.3s;
+
+}
+
+@keyframes diglettPop {
+    0% { bottom: -100px; opacity: 0; }
+    30% { opacity: 1; }
+    50% { bottom: 0px; opacity: 1; } 
+    100% { bottom: -100px; opacity: 0; }
+}
+
+.mole.up {
+    animation: diglettPop 1.2s;
+}
+
+.mole.hit {
+    background-image: url("hit.png");
+    background-size: cover;
+    opacity: 1;
+    transition: opacity 0.5s ;
+}
+
+.cursor {
+    width: 80px;
+    height: 80px;
+    background-image: url('hammer.png');
+    background-size: cover;
+    position: absolute;
+    pointer-events: none;
+    transform-origin: top center;
+    transition: transform 0.1s;
+}
+
+.cursor.active {
+    transform: translateY(10px) scale(1.1);
+}
+
+#startButton {
+    font-size: 18px;
+    padding: 12px 25px;
+    border-radius: 12px;
+    border: none;
+    background: #e0e5ec;
+    box-shadow: 5px 5px 10px #b8b8b8, -5px -5px 10px #ffffff;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 10px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    margin: 20px;
+
+}
+
+#startButton:hover {
+    box-shadow: inset 3px 3px 6px #b8b8b8, inset -3px -3px 6px #ffffff;
+}
+
+.counter {
+    font-size: 24px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 12px;
+    background: #e0e5ec;
+    box-shadow: 5px 5px 10px #b8b8b8, -5px -5px 10px #ffffff;
+    margin: 24px;
+}

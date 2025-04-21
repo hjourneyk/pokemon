@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whack-a-Diglett</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="favicon.png">
+
+</head>
+<body>
+    <h1>Whack-a-Diglett</h1>
+    <button id="startButton">Game Start</button>
+
+    <div class="container">
+        <div class="hole" id="hole1"></div>
+        <div class="hole" id="hole2"></div>
+        <div class="hole" id="hole3"></div>
+        <div class="hole" id="hole4"></div>
+        <div class="hole" id="hole5"></div>
+    </div>
+    <div class="counter">SCORE: <span id="score">0</span></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const container = document.querySelector('.container');
+            const scoreDisplay = document.getElementById("score");
+            const startButton = document.getElementById("startButton");
+            const holes = document.querySelectorAll(".hole");
+    
+            let gameActive = false;
+            let score = 0;
+            let moleInterval;
+    
+            const cursor = document.createElement("div");
+            cursor.classList.add("cursor");
+            document.body.appendChild(cursor);
+    
+            document.addEventListener('mousemove', (e) => {
+                requestAnimationFrame(() => {
+                    cursor.style.left = `${e.pageX - 40}px`;
+                    cursor.style.top = `${e.pageY - 40}px`;
+                });
+            });
+    
+            document.addEventListener("mousedown", () => {
+                cursor.classList.add("active");
+                cursor.style.backgroundImage = "url('hammer-hit.png')";
+                let hitSound = new Audio('hit.mp4');
+                hitSound.play();
+            });
+    
+            document.addEventListener("mouseup", () => {
+                cursor.classList.remove("active");
+                cursor.style.backgroundImage = "url('hammer.png')";
+            });
+    
+            startButton.addEventListener("click", () => {
+                startGame();
+            });
+    
+            function startGame() {
+                score = 0;
+                gameActive = true;
+            scoreDisplay.textContent = `${score}`;
+                container.innerHTML = "";
+    
+                holes.forEach((hole) => container.appendChild(hole));
+    
+                moleInterval = setInterval(() => {
+                    if (gameActive) createMole();
+                }, Math.random() * 2000 + 500);
+            }
+    
+            function createMole() {
+                if (!gameActive) return;
+    
+                const mole = document.createElement("div");
+                mole.classList.add("mole");
+    
+                let randomHole = holes[Math.floor(Math.random() * holes.length)];
+                randomHole.appendChild(mole);
+    
+                let randomSpeed = Math.random() * 1000 + 500;
+    
+                mole.style.bottom = "-50px";
+                mole.style.opacity = "0";
+    
+                setTimeout(() => popUpMole(mole, randomSpeed), Math.random() * 1000);
+            }
+    
+            function popUpMole(mole, speed) {
+                mole.classList.add("up");
+    
+                setTimeout(() => {
+                    mole.classList.remove("up");
+                    mole.classList.add("down");
+    
+                    setTimeout(() => {
+                        mole.classList.remove("down");
+                        mole.remove();
+                    }, speed);
+                }, speed);
+            }
+    
+            document.addEventListener("click", (e) => {
+                if (!gameActive) return;
+    
+                if (e.target.classList.contains("mole") && !e.target.classList.contains("hit")) {
+                    let hitSound = new Audio('hit.mp3');
+                    hitSound.play();
+    
+                    e.target.classList.add("hit");
+                    e.target.style.backgroundImage = "url('hit.png')";
+    
+                    setTimeout(() => {
+                        e.target.style.opacity = "0";
+                        setTimeout(() => e.target.remove(), 500);
+                    }, 300);
+    
+                    score++;
+                    scoreDisplay.textContent = `${score}`;
+    
+                    if (score >= 10) {
+                        gameActive = false;
+                        clearInterval(moleInterval);
+                        container.innerHTML = `
+                        <div style="text-align: center;">
+                            <img src="congrats.gif" alt="Win gif" style="width: 200px; display: block; margin: 0 auto;">
+                            <h2 style="color: red; text-align: center; font-size: 30px; margin-top: 10px;">YOU WIN!</h2>
+                        </div>`;                    
+                    }}
+            });
+        });
+    </script>
+    
+    
+    
+</body>
+</html>
